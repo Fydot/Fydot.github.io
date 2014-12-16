@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
-date:   2014-12-16 14:02:48
-categories: jekyll update
+title:  "You Confortable Area"
+date:   2014-12-09 14:02:48
+categories:  think about
 ---
 再谈恐怖的舒适区
 ===

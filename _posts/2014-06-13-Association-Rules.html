@@ -1,0 +1,222 @@
+---
+layout: default
+title: [数据挖掘]关联规则挖掘算法
+---
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+        margin: 10px 0 15px 0;
+        border-collapse: collapse;
+}
+td,th { 
+        border: 1px solid #ddd;
+        padding: 3px 10px;
+}
+th {
+        padding: 5px 10px;      
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+        body,code,pre code,h1,h2,h3,h4,h5,h6 {
+                color: black;
+        }
+        table, pre {
+                page-break-inside: avoid;
+        }
+}
+</style>
+
+<h1>关联挖掘算法</h1>
+
+<h1>1、Apriori</h1>
+
+<h2>算法目的</h2>
+
+<p>计算频繁项集、挖掘 Bool 关联规则</p>
+
+<h2>算法过程</h2>
+
+<p>假设满足 min_sup 的的最大项集为 k 项集，则迭代 k 次，从1项集开始。计算支持度，然后通过联合推导出2项集</p>
+
+<h2>优化</h2>
+
+<h3>剪枝，利用 Apriori 性质</h3>
+
+<p>反单调性，若 I 不是频繁项集，则 I 的超集必然也不是频繁项集</p>
+
+<h3>利用散列表</h3>
+
+<p>在扫描 L(k-1)的时候，利用散列表计算出 C(k)的支持度</p>
+
+<h3>压缩事物</h3>
+
+<p>利用 Apriori 算法的性质，不包含频繁项集的事物可以不再扫描</p>
+
+<h3>划分</h3>
+
+<p>将事物数据库数据划分，计算局部的频繁项集</p>
+
+<h1>2、FP增长</h1>
+
+<p>将数据库压缩到 FP 树，，利用前缀</p>
+
+<h1>3、垂直数据格式算法</h1>
+
+<p>将水平食物数据库数据垂直化</p>
+
+<h1>4、相关分析</h1>
+
+<h2>出现原因：</h2>
+
+<p>负相关，产生误导关联</p>
+
+<h2>检测方法</h2>
+
+<h3>提升度</h3>
+
+<pre><code>lift(A,B) = P(A U B) / (P(A) * P(B))
+</code></pre>
+
+<h3>χ2度量</h3>
+
+<pre><code>χ2 = Sum((观测值-期望值)^2 / 期望值)
+</code></pre>
+
+<h3>全置信度</h3>
+
+<pre><code>all_conf(X) = sup(X) / max_item_sup(X)
+
+== confidence of i =&gt; X - i (i 为 X 中的一个项)
+
+##可简单推导出来
+</code></pre>
+
+<h3>余弦定理</h3>
+
+<pre><code>cosine(A, B) = P(A U B) / Sqrt(P(A) * P(B))
+</code></pre>
+
+<p>一种好的策略是，先进行全置信度或者余弦分析，并且当结果显示他们是弱相关时，进行其他分析，以帮助得到更完整的描述</p>
+
+<p>{{ page.date | date_to_string }}</p>

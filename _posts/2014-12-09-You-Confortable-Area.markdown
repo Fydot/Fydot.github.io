@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "You Confortable Area"
+title:  "再谈恐怖的舒适区"
 date:   2014-12-09 14:02:48
 categories:  think about
 ---
